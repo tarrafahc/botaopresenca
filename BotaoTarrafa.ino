@@ -14,7 +14,7 @@ int leds[] = {  10, 11, 9  };   // Usando os pinos VERMELHO - VERDE - AZUL
 
 static int valor;
 int desligando = 0;
-int time;
+unsigned long time;
 
 //Random Color Generator Vars
 int redNow;
@@ -51,25 +51,29 @@ void loop(){
     digitalWrite(led,HIGH);  
     
     //------------[Random Color Generator Tabajara]-----------------\\
-    
-     analogWrite(leds[2], blueNow);
-     analogWrite(leds[0], redNow);
-     analogWrite(leds[1], greenNow);
-     
-     redNew = random(255);
-     blueNew = random(255);
-     greenNew = random(255);
-    
-     // fade to new colors
-     while ((redNow != redNew) ||  (blueNow != blueNew) ||  (greenNow != greenNew)){
-      fade(redNow,redNew)
-      fade(blueNow,blueNew)
-      fade(greenNow,greenNew)
+          
       analogWrite(leds[2], blueNow);
       analogWrite(leds[0], redNow);
       analogWrite(leds[1], greenNow);
-      delay(20);
-     }
+      
+      analogWrite(leds[2], blueNow);
+      analogWrite(leds[0], redNow);
+      analogWrite(leds[1], greenNow);
+      
+      redNew = random(255);
+      blueNew = random(255);
+      greenNew = random(255);
+      
+      // fade to new colors
+      while ((redNow != redNew) ||  (blueNow != blueNew) ||  (greenNow != greenNew) || (valor==1)){
+        fade(redNow,redNew)
+        fade(blueNow,blueNew)
+        fade(greenNow,greenNew)
+        analogWrite(leds[2], blueNow);
+        analogWrite(leds[0], redNow);
+        analogWrite(leds[1], greenNow);
+        delay(10); 
+      }
     
     //-----------------------------------------------------------------\\
     
@@ -77,11 +81,10 @@ void loop(){
   
   //Desliga tudo
   else{
-    
     //Desliga LED Botao
     digitalWrite(led,LOW);
-    //Se for mais do que 5mins, ele desliga a luz branca
-    if(millis() > time + 300000){  for(int i = 0; i < 3; i++){ digitalWrite(leds[i], LOW); }}
+    //Se for mais do que 3mins, ele desliga a luz branca
+    if(millis() > time + 60000){  for(int i = 0; i < 3; i++){ digitalWrite(leds[i], LOW); }}
     else{ for(int i = 0; i < 3; i++){ digitalWrite(leds[i], HIGH); }}
 
   }
@@ -101,7 +104,3 @@ void butaoPress(){
   }
   last_interrupt_time = interrupt_time;
 }
-
-
-
-
