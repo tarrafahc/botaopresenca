@@ -8,7 +8,6 @@
 #define memory 0 // Memoria
 #define bPin 2   // Pino do botao
 #define led A0   // Led do botao
-#define fade(x,y) if (x>y) x--; else if (x<y) x++;
 
 int leds[] = {  10, 11, 9  };   // Usando os pinos VERMELHO - VERDE - AZUL
 
