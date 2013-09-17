@@ -51,28 +51,22 @@ void loop(){
     digitalWrite(led,HIGH);  
     
     //------------[Random Color Generator Tabajara]-----------------\\
-          
-      analogWrite(leds[2], blueNow);
-      analogWrite(leds[0], redNow);
-      analogWrite(leds[1], greenNow);
-      
-      analogWrite(leds[2], blueNow);
-      analogWrite(leds[0], redNow);
-      analogWrite(leds[1], greenNow);
-      
+  
       redNew = random(255);
       blueNew = random(255);
       greenNew = random(255);
       
       // fade to new colors
-      while ((redNow != redNew) ||  (blueNow != blueNew) ||  (greenNow != greenNew) || (valor==1)){
-        fade(redNow,redNew)
-        fade(blueNow,blueNew)
-        fade(greenNow,greenNew)
+      while ((redNow != redNew) ||  (blueNow != blueNew) ||  (greenNow != greenNew)){
+        if(redNow>redNew){redNow--;} else if(redNow<redNew){redNow++;}
+        if(blueNow>blueNew){blueNow--;} else if(blueNow<blueNew){blueNow++;}
+        if(greenNow>greenNew){greenNow--;} else if(greenNow<greenNew){greenNow++;}
+        
         analogWrite(leds[2], blueNow);
         analogWrite(leds[0], redNow);
         analogWrite(leds[1], greenNow);
         delay(10); 
+        if(valor==0){goto desligar;}
       }
     
     //-----------------------------------------------------------------\\
@@ -81,6 +75,7 @@ void loop(){
   
   //Desliga tudo
   else{
+    desligar:
     //Desliga LED Botao
     digitalWrite(led,LOW);
     //Se for mais do que 3mins, ele desliga a luz branca
